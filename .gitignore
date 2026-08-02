@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# C++ build outputs
+*.o
+*.dSYM/
+build/
+
+# Local executable
+/cpp/source-inspector/source-inspector
