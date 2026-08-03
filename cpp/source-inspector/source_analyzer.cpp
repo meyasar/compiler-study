@@ -2,19 +2,19 @@
 #include <fstream>
 #include <string>
 
-int countLines(const char* filePath){
+AnalysisResult analyzeSource(const std::string& filePath){
+    AnalysisResult result;
     std::ifstream input(filePath);
 
     if(!input.is_open()){
-        return -1;
+        return result;
     }
-
-    int count = 0;
     std::string line;
 
     while(std::getline(input, line)){
-        count++;
+        result.totalLines++;
     }
+    result.success = true;
 
-    return count;
+    return result;
 }

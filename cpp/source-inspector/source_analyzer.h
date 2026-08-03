@@ -1,3 +1,9 @@
 #pragma once
+#include <string>
 
-int countLines(const char* filePath);
+struct AnalysisResult {
+    bool success = false;
+    int totalLines = 0;
+};
+
+AnalysisResult analyzeSource(const std::string& filePath);
