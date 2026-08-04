@@ -5,21 +5,22 @@
 #include <vector>
 
 int runApplication(int argc, char* argv[]) {
-    if(argc < 2) {
+    if (argc < 2) {
         std::cout << "Usage: source-inspector <source-file>" << std::endl;
         return 1;
     }
-
     bool hadError = false;
     std::vector<std::string> fileNames;
+
 
     for (int i = 1; i < argc; i++) {
         fileNames.emplace_back(argv[i]);
     }
-    AnalysisResult result;
+
 
     for (const std::string& fileName : fileNames) {
-        result = analyzeSource(fileName);
+        const SourceAnalyzer analyzer(fileName);
+        const AnalysisResult result = analyzer.analyze();
 
         if (!result.success) {
             std::cerr << "Error: could not open " << fileName << std::endl;
@@ -33,7 +34,7 @@ int runApplication(int argc, char* argv[]) {
         std::cout << "Code Lines: " << result.codeLines << std::endl;
     }
 
-    if(hadError){
+    if (hadError) {
         return 1;
     }
     return 0;

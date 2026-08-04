@@ -2,21 +2,24 @@
 #include <fstream>
 #include <string>
 
-AnalysisResult analyzeSource(const std::string& filePath){
-    AnalysisResult result;
-    std::ifstream input(filePath);
+SourceAnalyzer::SourceAnalyzer(const std::string& filePath)
+    :filePath_(filePath) {
+}
 
-    if(!input.is_open()) {
+AnalysisResult SourceAnalyzer::analyze() const {
+    AnalysisResult result;
+    std::ifstream input(filePath_);
+
+    if (!input.is_open()) {
         return result;
     }
 
     std::string line;
 
-    while(std::getline(input, line)) {
-        if(line.find_first_not_of(" \t\r") == std::string::npos){
+    while (std::getline(input, line)) {
+        if (line.find_first_not_of(" \t\r") == std::string::npos) {
             result.blankLines++;
-        }
-        else {
+        } else {
             result.codeLines++;
         }
     }

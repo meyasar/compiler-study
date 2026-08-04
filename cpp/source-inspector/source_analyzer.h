@@ -8,4 +8,11 @@ struct AnalysisResult {
     int codeLines = 0;
 };
 
-AnalysisResult analyzeSource(const std::string& filePath);
+class SourceAnalyzer {
+    public:
+          SourceAnalyzer(const std::string& filePath);
+          AnalysisResult analyze() const;
+
+    private:
+          std::string filePath_;
+};
