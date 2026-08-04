@@ -1,5 +1,6 @@
 #include "application.h"
 #include "source_analyzer.h"
+#include "report_printer.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -17,6 +18,8 @@ int runApplication(int argc, char* argv[]) {
         fileNames.emplace_back(argv[i]);
     }
 
+    const TextReportPrinter textPrinter;
+    const ReportPrinter& printer = textPrinter;
 
     for (const std::string& fileName : fileNames) {
         const SourceAnalyzer analyzer(fileName);
@@ -28,10 +31,7 @@ int runApplication(int argc, char* argv[]) {
             continue;
         }
 
-        std::cout << "Analyzing: " << fileName << std::endl;
-        std::cout << "Total Lines: " << result.totalLines << std::endl;
-        std::cout << "Blank Lines: " << result.blankLines << std::endl;
-        std::cout << "Code Lines: " << result.codeLines << std::endl;
+        printer.print(fileName, result);
     }
 
     if (hadError) {

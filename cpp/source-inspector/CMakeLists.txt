@@ -9,6 +9,7 @@ add_executable(source-inspector
     main.cpp
     application.cpp
     source_analyzer.cpp
+    report_printer.cpp
 )
 
 enable_testing()
