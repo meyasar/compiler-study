@@ -47,27 +47,7 @@ Analyze multiple files:
 
 The report contains the total number of physical lines and their blank/non-blank classification.
 
-## Architecture
 
-```text
-CLI arguments
-    ↓
-Application
-    ↓
-SourceAnalyzer
-    ↓
-AnalysisResult
-    ↓
-ReportPrinter
-    ↓
-TextReportPrinter
-```
-
-- `Application` validates arguments and coordinates multi-file analysis.
-- `SourceAnalyzer` reads and classifies physical lines.
-- `AnalysisResult` stores the collected metrics.
-- `ReportPrinter` defines the polymorphic reporting interface.
-- `TextReportPrinter` writes the current text report.
 
 ## Tests
 
