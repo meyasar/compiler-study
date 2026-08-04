@@ -15,9 +15,13 @@ AnalysisResult SourceAnalyzer::analyze() const {
     }
 
     std::string line;
+    const auto isBlankLine = [](const std::string& currentLine) {
+        return currentLine.find_first_not_of(" \t\r")
+        == std::string::npos;
+    };
 
     while (std::getline(input, line)) {
-        if (line.find_first_not_of(" \t\r") == std::string::npos) {
+        if (isBlankLine(line)) {
             result.blankLines++;
         } else {
             result.codeLines++;

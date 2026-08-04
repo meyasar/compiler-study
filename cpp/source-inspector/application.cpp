@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 int runApplication(int argc, char* argv[]) {
     if (argc < 2) {
@@ -18,8 +19,7 @@ int runApplication(int argc, char* argv[]) {
         fileNames.emplace_back(argv[i]);
     }
 
-    const TextReportPrinter textPrinter;
-    const ReportPrinter& printer = textPrinter;
+    std::unique_ptr<ReportPrinter> printer = std::make_unique<TextReportPrinter>();
 
     for (const std::string& fileName : fileNames) {
         const SourceAnalyzer analyzer(fileName);
@@ -31,7 +31,7 @@ int runApplication(int argc, char* argv[]) {
             continue;
         }
 
-        printer.print(fileName, result);
+        printer -> print(fileName, result);
     }
 
     if (hadError) {

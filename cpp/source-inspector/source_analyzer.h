@@ -9,10 +9,10 @@ struct AnalysisResult {
 };
 
 class SourceAnalyzer {
-    public:
-          SourceAnalyzer(const std::string& filePath);
-          AnalysisResult analyze() const;
+public:
+    SourceAnalyzer(const std::string& filePath);
+    AnalysisResult analyze() const;
 
-    private:
-          std::string filePath_;
+private:
+    std::string filePath_;
 };
