@@ -8,6 +8,11 @@ enum class TokenType {
     Number,
     Equal,
     Plus,
+    Minus,
+    Star,
+    Slash,
+    LeftParen,
+    RightParen,
     Semicolon,
     EndOfFile,
     Unknown

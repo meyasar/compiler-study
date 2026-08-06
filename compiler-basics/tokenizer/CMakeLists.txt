@@ -8,6 +8,8 @@ set(CMAKE_CXX_EXTERNSIONS OFF)
 add_executable(tokenizer
     main.cpp
     lexer.cpp
+    parser.cpp
+    ast.cpp
 )
 
 target_compile_options(tokenizer PRIVATE
