@@ -1,10 +1,12 @@
 #include "lexer.h"
 #include "parser.h"
+
+#include <exception>
+#include <fstream>
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <utility>
-#include <fstream>
-#include <iterator>
 
 
 
@@ -23,16 +25,22 @@ int main(int argc, char* argv[]) {
 
     std::string source{ std::istreambuf_iterator<char>{input}, std::istreambuf_iterator<char>{}};
 
-    Lexer lexer{source};
-    std::vector<Token> tokens = lexer.tokenize();
+    try {
+        Lexer lexer{source};
+        std::vector<Token> tokens = lexer.tokenize();
 
-    Parser parser{std::move(tokens)};
-    auto statements = parser.parse();
+        Parser parser{std::move(tokens)};
+        auto statements = parser.parse();
 
-    SymbolTable symbols;
+        SymbolTable symbols;
 
-    for(auto& statement : statements) {
-        statement -> execute(symbols);
+        for(auto& statement : statements) {
+            statement -> execute(symbols);
+        }
+    } catch (const std::exception& error) {
+        std::cerr << "Error: " << error.what() << "\n";
+        return 1;
     }
+
     return 0;
 }

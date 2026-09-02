@@ -45,3 +45,16 @@ set_tests_properties(
     PROPERTIES
         WILL_FAIL TRUE
 )
+
+add_test(
+    NAME interpreter_rejects_missing_semicolon
+    COMMAND
+        tokenizer
+        ${CMAKE_CURRENT_SOURCE_DIR}/examples/invalid/missing_semicolon.toy
+)
+
+set_tests_properties(
+    interpreter_rejects_missing_semicolon
+    PROPERTIES
+        WILL_FAIL TRUE
+)
