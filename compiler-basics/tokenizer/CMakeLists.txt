@@ -22,11 +22,26 @@ enable_testing()
 
 add_test(
     NAME interpreter_smoke
-    COMMAND tokenizer
+    COMMAND
+        tokenizer
+        ${CMAKE_CURRENT_SOURCE_DIR}/examples/arithmetic.toy
 )
 
 set_tests_properties(
     interpreter_smoke
     PROPERTIES
         PASS_REGULAR_EXPRESSION "38"
+)
+
+add_test(
+    NAME interpreter_rejects_missing_file
+    COMMAND
+        tokenizer
+        ${CMAKE_CURRENT_SOURCE_DIR}/examples/missing.toy
+)
+
+set_tests_properties(
+    interpreter_rejects_missing_file
+    PROPERTIES
+        WILL_FAIL TRUE
 )
