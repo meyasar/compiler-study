@@ -17,3 +17,16 @@ target_compile_options(tokenizer PRIVATE
     -Wextra
     -Wpedantic
 )
+
+enable_testing()
+
+add_test(
+    NAME interpreter_smoke
+    COMMAND tokenizer
+)
+
+set_tests_properties(
+    interpreter_smoke
+    PROPERTIES
+        PASS_REGULAR_EXPRESSION "38"
+)
