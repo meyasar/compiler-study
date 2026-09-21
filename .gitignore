@@ -11,3 +11,5 @@ build/
 
 # Compiler frontend executable
 /compiler-basics/tokenizer/tokenizer
+
+.idea/
