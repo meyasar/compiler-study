@@ -58,3 +58,16 @@ set_tests_properties(
     PROPERTIES
         WILL_FAIL TRUE
 )
+
+add_test(
+        NAME interpreter_rejects_duplicate_variable
+        COMMAND
+        tokenizer
+        ${CMAKE_CURRENT_SOURCE_DIR}/examples/invalid/duplicate_variable.toy
+)
+
+set_tests_properties(
+        interpreter_rejects_duplicate_variable
+        PROPERTIES
+        WILL_FAIL TRUE
+)

@@ -52,8 +52,14 @@ int BinaryExpression::evaluate(const SymbolTable& symbols) const {
 }
 
 void LetStatement::execute(SymbolTable& symbols) const {
+    if (symbols.find(name_) != symbols.end())
+    {
+        throw std::runtime_error(std::string("Variable ") + name_ + " already exists");
+    }
+
     int value = initializer_->evaluate(symbols);
     symbols[name_] = value;
+
 }
 
 void PrintStatement::execute(SymbolTable& symbols) const {
