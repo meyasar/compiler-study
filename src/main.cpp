@@ -1,6 +1,5 @@
 #include "lexer.h"
 #include "parser.h"
-#include "codegen.h"
 
 #include <exception>
 #include <fstream>
@@ -12,13 +11,12 @@
 
 
 int main(int argc, char* argv[]) {
-    const bool emitIR = argc == 3 && std::string(argv[1]) == "--emit-ir";
-    if ((!emitIR && argc != 2) || (argc == 2 && std::string(argv[1]) == "--emit-ir")) {
-        std::cerr << "Usage: tokenizer [--emit-ir] <source-file>\n";
+    if (argc != 2) {
+        std::cerr << "Usage: toy-interpreter <source-file>\n";
         return 1;
     }
 
-    const char* sourcePath = argv[emitIR ? 2 : 1];
+    const char* sourcePath = argv[1];
     std::ifstream input{sourcePath};
 
     if(!input.is_open()) {
@@ -40,12 +38,6 @@ int main(int argc, char* argv[]) {
         for (const auto& statement : statements)
         {
             statement -> analyze(names);
-        }
-
-        if (emitIR) {
-            CodegenContext context;
-            std::cout << context.generate(statements);
-            return 0;
         }
 
         SymbolTable symbols;

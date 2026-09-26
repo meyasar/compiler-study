@@ -9,8 +9,8 @@ build/
 # Local executable
 /studies/source-inspector/source-inspector
 
-# Compiler frontend executable
-/tokenizer
+# Interpreter executable
+/toy-interpreter
 
 cmake-build*/
 

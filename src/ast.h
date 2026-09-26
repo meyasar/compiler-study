@@ -10,21 +10,16 @@ using Integer = std::int32_t;
 using SymbolTable = std::unordered_map<std::string, Integer>;
 using DefinedNames = std::unordered_set<std::string>;
 
-namespace llvm { class Value; }
-class CodegenContext;
-
 class Expression {
 public:
     virtual ~Expression() = default;
     virtual Integer evaluate(const SymbolTable& symbols) const = 0;
     virtual void analyze(const DefinedNames& names) const = 0;
-    virtual llvm::Value* codegen(CodegenContext& context) const;
 };
 
 class NumberExpression : public Expression {
 public:
     NumberExpression(Integer value);
-    llvm::Value* codegen(CodegenContext& context) const override;
     Integer evaluate(const SymbolTable& symbols) const override;
     void analyze(const DefinedNames& names) const override;
 private:
@@ -80,7 +75,6 @@ public:
     virtual ~Statement() = default;
     virtual void execute(SymbolTable& symbols) const = 0;
     virtual void analyze(DefinedNames& names) const = 0;
-    virtual void codegen(CodegenContext& context) const;
 };
 
 class LetStatement : public Statement {
@@ -97,7 +91,6 @@ private:
 class PrintStatement : public Statement {
 public:
     PrintStatement(std::unique_ptr<Expression> expression);
-    void codegen(CodegenContext& context) const override;
     void execute(SymbolTable& symbols) const override;
     void analyze(DefinedNames& names) const override;
 private:
