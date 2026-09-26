@@ -27,6 +27,7 @@ private:
 
     std::unique_ptr<Expression> parseExpression(); // + and -
     std::unique_ptr<Expression> parseTerm();       // * and /
+    std::unique_ptr<Expression> parseUnary();      // unary -
     std::unique_ptr<Expression> parsePrimary();    // number, variable and paranthesis
 
     std::vector<Token> tokens_;

@@ -27,7 +27,7 @@ if(BUILD_TESTING)
             -load-pass-plugin=$<TARGET_FILE:StaticAnalyzerPass>
             -passes=static-analyzer
             -disable-output
-            ${CMAKE_CURRENT_SOURCE_DIR}/../llvm-ir/examples/arithmetic_O0.ll
+            ${CMAKE_CURRENT_SOURCE_DIR}/../studies/llvm-ir/examples/arithmetic_O0.ll
     )
 
     set_tests_properties(

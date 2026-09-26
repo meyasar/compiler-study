@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
+#include "codegen.h"
 
 #include <exception>
 #include <fstream>
@@ -11,15 +12,17 @@
 
 
 int main(int argc, char* argv[]) {
-    if (argc != 2 ) {
-        std::cerr << "Usage: tokenizer <source-file>\n";
+    const bool emitIR = argc == 3 && std::string(argv[1]) == "--emit-ir";
+    if ((!emitIR && argc != 2) || (argc == 2 && std::string(argv[1]) == "--emit-ir")) {
+        std::cerr << "Usage: tokenizer [--emit-ir] <source-file>\n";
         return 1;
     }
 
-    std::ifstream input{argv[1]};
+    const char* sourcePath = argv[emitIR ? 2 : 1];
+    std::ifstream input{sourcePath};
 
     if(!input.is_open()) {
-        std::cerr << "Error could not open " << argv[1] << "\n";
+        std::cerr << "Error could not open " << sourcePath << "\n";
         return 1;
     }
 
@@ -30,7 +33,20 @@ int main(int argc, char* argv[]) {
         std::vector<Token> tokens = lexer.tokenize();
 
         Parser parser{std::move(tokens)};
+
         auto statements = parser.parse();
+
+        DefinedNames names;
+        for (const auto& statement : statements)
+        {
+            statement -> analyze(names);
+        }
+
+        if (emitIR) {
+            CodegenContext context;
+            std::cout << context.generate(statements);
+            return 0;
+        }
 
         SymbolTable symbols;
 

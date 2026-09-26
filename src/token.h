@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <cstddef>
 
 enum class TokenType {
     Let,
@@ -21,4 +22,6 @@ enum class TokenType {
 struct Token {
     TokenType type = TokenType::Unknown;
     std::string lexeme;
+    std::size_t line = 1;
+    std::size_t column = 1;
 };

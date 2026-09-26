@@ -20,6 +20,15 @@ char Lexer::peek() const {
 char Lexer::advance() {
     char character = peek();
     current_++;
+    if (character == '\n')
+    {
+        line_++;
+        column_ = 1;
+    } else
+    {
+        column_++;
+    }
+
     return character;
 }
 
@@ -55,14 +64,14 @@ Token Lexer::scanIdentifier() {
     std::string lexeme = source_.substr(start_, current_ - start_);
 
     if (lexeme == "let") {
-        return Token{TokenType::Let, lexeme};
+        return Token{TokenType::Let, lexeme, startLine_, startColumn_};
     }
 
     if (lexeme == "print") {
-        return Token{TokenType::Print, lexeme};
+        return Token{TokenType::Print, lexeme, startLine_, startColumn_};
     }
 
-    return Token{TokenType::Identifier, lexeme};
+    return Token{TokenType::Identifier, lexeme, startLine_, startColumn_};
 }
 
 Token Lexer::scanNumber() {
@@ -77,7 +86,7 @@ Token Lexer::scanNumber() {
     }
     std::string lexeme = source_.substr(start_, current_ - start_);
 
-    return Token{TokenType::Number, lexeme};
+    return Token{TokenType::Number, lexeme, startLine_, startColumn_};
 }
 
 Token Lexer::scanToken() {
@@ -85,8 +94,11 @@ Token Lexer::scanToken() {
     skipWhitespace();
     start_ = current_;
 
+    startLine_ = line_;
+    startColumn_ = column_;
+
     if (isAtEnd()) {
-        return Token{TokenType::EndOfFile, ""};
+        return Token{TokenType::EndOfFile, "", startLine_, startColumn_};
     }
 
     char character = advance();
@@ -101,23 +113,23 @@ Token Lexer::scanToken() {
 
     switch (character) {
         case '=':
-            return Token{TokenType::Equal, "="};
+            return Token{TokenType::Equal, "=", startLine_, startColumn_};
         case '+':
-            return Token{TokenType::Plus, "+"};
+            return Token{TokenType::Plus, "+", startLine_, startColumn_};
         case '-':
-            return Token{TokenType::Minus, "-"};
+            return Token{TokenType::Minus, "-", startLine_, startColumn_};
         case '*':
-            return Token{TokenType::Star, "*"};
+            return Token{TokenType::Star, "*", startLine_, startColumn_};
         case '/':
-            return Token{TokenType::Slash, "/"};
+            return Token{TokenType::Slash, "/", startLine_, startColumn_};
         case '(':
-            return Token{TokenType::LeftParen, "("};
+            return Token{TokenType::LeftParen, "(", startLine_, startColumn_};
         case ')':
-            return Token{TokenType::RightParen, ")"};
+            return Token{TokenType::RightParen, ")", startLine_, startColumn_};
         case ';':
-            return Token{TokenType::Semicolon, ";"};
+            return Token{TokenType::Semicolon, ";", startLine_, startColumn_};
         default:
-            return Token{TokenType::Unknown, std::string(1, character)};
+            return Token{TokenType::Unknown, std::string(1, character), startLine_, startColumn_};
     }
 }
 

@@ -20,4 +20,8 @@ private:
     std::string source_;
     std::size_t start_ = 0;
     std::size_t current_ = 0;
+    std::size_t line_ = 1;
+    std::size_t column_ = 1;
+    std::size_t startLine_ = 1;
+    std::size_t startColumn_ = 1;
 };

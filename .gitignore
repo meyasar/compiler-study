@@ -7,9 +7,11 @@
 build/
 
 # Local executable
-/cpp/source-inspector/source-inspector
+/studies/source-inspector/source-inspector
 
 # Compiler frontend executable
-/compiler-basics/tokenizer/tokenizer
+/tokenizer
+
+cmake-build*/
 
 .idea/
