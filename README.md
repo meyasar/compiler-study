@@ -34,5 +34,4 @@ filesystem when building through WSL.
 ~/build/toy-interpreter/toy-interpreter examples/arithmetic.toy
 ```
 
-The interpreter accepts a source file and executes it directly. In CLion, reload
-the CMake project and select the `toy-interpreter` target.
+The interpreter accepts a source file and executes it directly.
